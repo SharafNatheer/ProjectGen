@@ -1,0 +1,11 @@
+﻿@model ProjectIDGenerator.ViewModels.ProjectsViewModel
+@{
+    Layout = null;
+}
+<datalist asp-for="ProjectId" asp-items="ViewBag.Projects">
+</datalist>
+    <select asp-for="ProjectId" asp-items="ViewBag.Projects"></select>
+<form asp-controller="Home" asp-action="AddProject">
+    <input type="text" asp-for="Name"/>
+    <button type="submit">+</button>
+</form>
