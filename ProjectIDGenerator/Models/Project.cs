@@ -6,8 +6,7 @@ namespace ProjectIDGenerator.Models
     public class Project
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Name { get; set; }

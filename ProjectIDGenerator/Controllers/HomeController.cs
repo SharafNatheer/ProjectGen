@@ -31,6 +31,7 @@ namespace ProjectIDGenerator.Controllers
         {
             var project = new Project
             {
+                Id = IdGen(request.Name),
                 Name = request.Name,
                 ChangeRequestId = 1
             };
@@ -42,6 +43,21 @@ namespace ProjectIDGenerator.Controllers
             var projects = await _context.Projects.ToListAsync();
             model.Projects = projects;
             return View("Home",model);
+        }
+
+        public string IdGen (string name)
+        {
+            var length = name.Length;
+            var result = string.Empty;
+            bool exists = true;
+            while (exists)
+            {
+                var rand1 = new Random();
+                result = name.Substring(0, rand1.Next(2,length)) + '-';
+                result += rand1.Next(0, length);
+                exists = _context.Projects.Any(u => u.Id == result);
+            }
+            return result;
         }
     }
 }
