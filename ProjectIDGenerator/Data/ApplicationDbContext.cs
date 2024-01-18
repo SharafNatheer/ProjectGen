@@ -9,5 +9,6 @@ namespace ProjectIDGenerator.Data
         {}
         
         public DbSet<Project> Projects { get; set; }
+        public DbSet<ChangeRequests> ChangeRequests { get; set; }
     }
 }

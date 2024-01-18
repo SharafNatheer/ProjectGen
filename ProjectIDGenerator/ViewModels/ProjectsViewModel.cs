@@ -1,4 +1,5 @@
 ﻿using ProjectIDGenerator.Models;
+using ProjectIDGenerator.Validators;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectIDGenerator.ViewModels
@@ -12,6 +13,7 @@ namespace ProjectIDGenerator.ViewModels
         public int ChangeRequestID { get; set; }
 
         [Required]
+        [NameUnique]
         public string Name { get; set; }
     }
 }

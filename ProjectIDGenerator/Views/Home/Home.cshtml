@@ -1,15 +1,80 @@
 ﻿@model ProjectIDGenerator.ViewModels.ProjectsViewModel
 @{
-    Layout = null;
+
 }
-    <select asp-for="ProjectId" asp-items="ViewBag.Projects"></select>
-<form asp-controller="Home" asp-action="AddProject">
-    <input type="text" asp-for="Name"/>
-    <button type="submit">+</button>
-</form>
+<div class="container-fluid vh-100">
+    <div class="row text-center p-2 border-bottom">
+        <h1>Project ID Generator</h>
+    </div>
+    <div class="row pt-4 justify-content-center ">
+        <div class="col-6">
+            <select class="form-select" id="single" asp-for="ProjectId" asp-items="ViewBag.Projects" style="width:100%;">
+                <option value="" disabled selected>Projects</option>
+            </select>
+        </div>
+    </div>
+    <div class="row pt-4 justify-content-center">
+        <div class="col-6">
+            <form asp-controller="Home" asp-action="AddProject">
+                <div class="row">
+                    <div class="col-11">
+                        <input class="form-control" type="text" asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary mb-3" type="submit">+</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+        <div class="row pt-4 justify-content-center">
+            <div class="col-6">
+                <span>Project ID =></span>
+            </div>
+            <div class="col-6" >
+                <span id="projectID">@Model.ProjectId</span>
+            </div>
+        </div>
+        <div class="row pt-4 justify-content-center">
+            <div class="col-6">
+                <span>Change Request ID =></span>
+            </div>
+            <div class="col-6" >
+                <span id="changeID">@Model.ChangeRequestID</span>
+            </div>
+        </div>
+</div>
+
 
 <script>
 $(document).on('change', 'select', function() {
-    console.log($(this).val()); // the selected options’s value
+    var VerificationToken = $('input:hidden[name="__RequestVerificationToken"]').val();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddChangeRequest")',
+            headers: {
+                RequestVerificationToken: VerificationToken
+            },
+            dataType: 'json',
+            data: {
+                ProjectID: $(this).val()
+            },
+            success: function (model) {
+                document.getElementById("single").selectedIndex = 0;
+                document.getElementById('projectID').textContent = model.projectId;
+                document.getElementById('changeID').textContent = model.changeRequestID;
+            },
+            error: function (ex) {
+                alert('Failed to retrieve the project.' + ex);
+            }
+        });
 });
+</script>
+
+<script>
+    $("#single").select2({
+        placeholder: "Select a Project",
+        allowClear: false
+    });
 </script>

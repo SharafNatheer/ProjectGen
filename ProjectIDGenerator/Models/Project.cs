@@ -12,8 +12,5 @@ namespace ProjectIDGenerator.Models
         public string Name { get; set; }
 
         public DateTime? CreationDate { get; set; }
-
-		[Required]
-		public int ChangeRequestId { get; set; }
 	}
 }
