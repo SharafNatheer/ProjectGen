@@ -7,10 +7,10 @@ namespace ProjectIDGenerator.Models
     {
         [Key]
         public string Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDate { get; set; }
+        public string? Description { get; set; }
 	}
 }

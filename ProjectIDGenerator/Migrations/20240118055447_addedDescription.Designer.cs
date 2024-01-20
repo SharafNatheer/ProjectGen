@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectIDGenerator.Data;
 
@@ -11,9 +12,10 @@ using ProjectIDGenerator.Data;
 namespace ProjectIDGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118055447_addedDescription")]
+    partial class addedDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,8 @@ namespace ProjectIDGenerator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cId"), 1L, 1);
 
-                    b.Property<string>("ChangeRequestId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ChangeRequestId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
@@ -41,12 +42,15 @@ namespace ProjectIDGenerator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProjectID")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProjectID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("cId");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("Id");
 
                     b.ToTable("ChangeRequests");
                 });
@@ -60,6 +64,7 @@ namespace ProjectIDGenerator.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -75,7 +80,7 @@ namespace ProjectIDGenerator.Migrations
                 {
                     b.HasOne("ProjectIDGenerator.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectID");
+                        .HasForeignKey("Id");
 
                     b.Navigation("Project");
                 });

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectIDGenerator.Data;
+using ProjectIDGenerator.Migrations;
 using ProjectIDGenerator.Models;
 using ProjectIDGenerator.ViewModels;
 
@@ -20,78 +21,112 @@ namespace ProjectIDGenerator.Controllers
         public async Task<IActionResult> Home()
         {
             var model = new ProjectsViewModel();
-            ViewBag.Projects = new SelectList(_context.Projects.ToList(), "Id", "Name");
-            var projects = await _context.Projects.ToListAsync();
-            model.Projects = projects;
+            ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+            }).ToList(), "Id", "Name");
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddProject(ProjectsViewModel request)
         {
-            ModelState.Remove("Projects");
-            ModelState.Remove("ProjectID");
+            ModelState.Remove("ProjectId");
+            ModelState.Remove("ChangeDescription");
             if (!ModelState.IsValid)
             {
-                return View("Home",request);
+                ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+                }).ToList(), "Id", "Name");
+                return View("Home", request);
             }
             var project = new Project
             {
-                Id = IdGen(request.Name),
+                Id = await IdGen(),
                 Name = request.Name,
+                Description = request.Description,
+                CreationDate = DateTime.Now
             };
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
-            var chrequest = new ChangeRequests
-            {
-                ProjectID = project.Id,
-                ChangeRequestId = 1
-            };
-            await _context.ChangeRequests.AddAsync(chrequest);
-            await _context.SaveChangesAsync();
-
             var model = new ProjectsViewModel();
-            ViewBag.Projects = new SelectList(_context.Projects.ToList(), "Id", "Name");
-            var projects = await _context.Projects.ToListAsync();
-            model.Projects = projects;
+            ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+            }).ToList(), "Id", "Name");
+            List<ChangeRequests> changes = new List<ChangeRequests>();
             model.ProjectId = project.Id;
-            model.ChangeRequestID = chrequest.ChangeRequestId;
+            model.ChangeRequests = changes;
             return View("Home", model);
         }
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<JsonResult> AddChangeRequest(string ProjectID)
+        public async Task<IActionResult> AddChangeRequest(ChangesViewModel changeRequest)
         {
-            var ChangeRequest = await _context.ChangeRequests.Where(p => p.ProjectID == ProjectID).OrderByDescending(o => o.ChangeRequestId).FirstOrDefaultAsync();
             var Request = new ChangeRequests
             {
-                ProjectID = ChangeRequest.ProjectID,
-                ChangeRequestId = ChangeRequest.ChangeRequestId++,
+                ProjectID = changeRequest.ProjectId,
+                ChangeRequestId = await ChReqGen(changeRequest.ProjectId),
+                Description = changeRequest.ChangeDescription,
+                CreationDate = DateTime.Now
             };
             await _context.ChangeRequests.AddAsync(Request);
             await _context.SaveChangesAsync();
 
+            ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+            }).ToList(), "Id", "Name");
             var model = new ProjectsViewModel();
+            var changes = await _context.ChangeRequests.Where(c => c.ProjectID == changeRequest.ProjectId).OrderByDescending(c => c.CreationDate).ToListAsync();
             model.ProjectId = Request.ProjectID;
-            model.ChangeRequestID = Request.ChangeRequestId;
-            return Json(model); 
+            model.ChangeRequests = changes;
+            return View("Home", model);
         }
 
 
-
-        public string IdGen(string name)
+        public async Task<IActionResult> GetChanges(string projectID)
         {
-            var length = name.Length;
-            var result = string.Empty;
+            var changes = await _context.ChangeRequests.Where(c => c.ProjectID == projectID).OrderByDescending(o => o.ChangeRequestId).ToListAsync();
+            var model = new ProjectsViewModel();
+            ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+            }).ToList(), "Id", "Name");
+            model.ChangeRequests = changes;
+            model.ProjectId = projectID;
+            return View("Home", model);
+        }
+
+        public async Task<string> IdGen()
+        {
+            string result = string.Empty;
             bool exists = true;
             while (exists)
             {
-                var rand1 = new Random();
-                //result = name.Substring(0, rand1.Next(2, length)) + '-';
-                result = name + '-';
-                result += rand1.Next(0, 1000000);
-                exists = _context.Projects.Any(u => u.Id == result);
+                var rand = new Random();
+                result = "ID" + rand.Next(10, 99);
+                exists = await _context.Projects.AnyAsync(p => p.Id == result);
+            }
+            return result;
+        }
+
+        public async Task<string> ChReqGen(string projectId)
+        {
+            string result = string.Empty;
+            bool exists = true;
+            while (exists)
+            {
+                var rand = new Random();
+                result = projectId + '-' + rand.Next(100, 999);
+                exists = await _context.ChangeRequests.AnyAsync(p => p.ChangeRequestId == result);
             }
             return result;
         }

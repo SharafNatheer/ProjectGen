@@ -7,11 +7,18 @@ namespace ProjectIDGenerator.Models
     {
         [Key]
         public int cId { get; set; }
+
+        [ForeignKey("ProjectId")]
         public virtual string? ProjectID { get; set; }
-        [ForeignKey("Id")]
         public Project? Project { get; set; }
 
         [Required]
-        public int ChangeRequestId { get; set; }
+        public string ChangeRequestId { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? CreationDate { get; set; }
     }
 }
