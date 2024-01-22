@@ -14,6 +14,8 @@ namespace ProjectIDGenerator.ViewModels
         [NameUnique]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "This field can not be empty.")]
+        [NameUnique]
         public string? Description { get; set; }
 
         public List<ChangeRequests>? ChangeRequests { get; set; }
@@ -21,5 +23,10 @@ namespace ProjectIDGenerator.ViewModels
         public ChangesViewModel? changesViewModel { get; set; }
 
         public string ChangeDescription { get; set; }
+
+        public string RequestBy { get; set; }
+        public string StakeHolder { get; set; }
+        public string RelatedSystem { get; set; }
+        public string Sponsor { get; set; }
     }
 }

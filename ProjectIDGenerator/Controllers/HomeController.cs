@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OpenXmlPowerTools;
 using ProjectIDGenerator.Data;
 using ProjectIDGenerator.Migrations;
 using ProjectIDGenerator.Models;
 using ProjectIDGenerator.ViewModels;
+using System.Xml;
 
 namespace ProjectIDGenerator.Controllers
 {
@@ -73,6 +75,10 @@ namespace ProjectIDGenerator.Controllers
                 ProjectID = changeRequest.ProjectId,
                 ChangeRequestId = await ChReqGen(changeRequest.ProjectId),
                 Description = changeRequest.ChangeDescription,
+                RequestBy = changeRequest.RequestBy,
+                RelatedSystem = changeRequest.RelatedSystem,
+                Sponsor = changeRequest.Sponsor,
+
                 CreationDate = DateTime.Now
             };
             await _context.ChangeRequests.AddAsync(Request);
@@ -105,6 +111,18 @@ namespace ProjectIDGenerator.Controllers
             return View("Home", model);
         }
 
+        public async Task<IActionResult> MSWDownload(string crid)
+        {
+            var changeRequest = await _context.ChangeRequests.Where(c => c.ChangeRequestId == crid).FirstOrDefaultAsync();
+            var path = Path.Combine(Environment.CurrentDirectory, "Templates\\CRIDMS.docx");
+            var templateDoc = System.IO.File.ReadAllBytes(path);
+            var generatedDoc = SearchAndReplace(templateDoc, new Dictionary<string, string>(){
+    {"<<ProjID>>", changeRequest.ProjectID},
+    {"<<CRID>>", changeRequest.ChangeRequestId},
+});
+            return File(generatedDoc, "application/vnd.openxmlformats-officedocument.wordprocessingml.document ", "CRIDMS.docx");
+        }
+
         public async Task<string> IdGen()
         {
             string result = string.Empty;
@@ -125,10 +143,20 @@ namespace ProjectIDGenerator.Controllers
             while (exists)
             {
                 var rand = new Random();
-                result = projectId + '-' + rand.Next(100, 999);
+                result = projectId + rand.Next(100, 999);
                 exists = await _context.ChangeRequests.AnyAsync(p => p.ChangeRequestId == result);
             }
             return result;
+        }
+
+        protected byte[] SearchAndReplace(byte[] file, IDictionary<string, string> translations)
+        {
+            WmlDocument doc = new WmlDocument(file.Length.ToString(), file);
+
+            foreach (var translation in translations)
+                doc = doc.SearchAndReplace(translation.Key, translation.Value, true);
+
+            return doc.DocumentByteArray;
         }
     }
 }

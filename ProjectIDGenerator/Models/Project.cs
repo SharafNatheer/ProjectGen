@@ -12,5 +12,7 @@ namespace ProjectIDGenerator.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDate { get; set; }
         public string? Description { get; set; }
+        public string? NameForAuth { get; set; }
+
 	}
 }
