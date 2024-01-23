@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectIDGenerator.Migrations
 {
-    public partial class change : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,9 @@ namespace ProjectIDGenerator.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameForAuth = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,24 +30,29 @@ namespace ProjectIDGenerator.Migrations
                 {
                     cId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ChangeRequestId = table.Column<int>(type: "int", nullable: false)
+                    ProjectID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ChangeRequestId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RequestBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StakeHolder = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RelatedSystem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sponsor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChangeRequests", x => x.cId);
                     table.ForeignKey(
-                        name: "FK_ChangeRequests_Projects_Id",
-                        column: x => x.Id,
+                        name: "FK_ChangeRequests_Projects_ProjectID",
+                        column: x => x.ProjectID,
                         principalTable: "Projects",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChangeRequests_Id",
+                name: "IX_ChangeRequests_ProjectID",
                 table: "ChangeRequests",
-                column: "Id");
+                column: "ProjectID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

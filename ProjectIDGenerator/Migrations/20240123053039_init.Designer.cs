@@ -12,8 +12,8 @@ using ProjectIDGenerator.Data;
 namespace ProjectIDGenerator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240120193107_ConvertToString")]
-    partial class ConvertToString
+    [Migration("20240123053039_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,18 @@ namespace ProjectIDGenerator.Migrations
                     b.Property<string>("ProjectID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("RelatedSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sponsor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StakeHolder")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("cId");
 
                     b.HasIndex("ProjectID");
@@ -66,6 +78,9 @@ namespace ProjectIDGenerator.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameForAuth")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

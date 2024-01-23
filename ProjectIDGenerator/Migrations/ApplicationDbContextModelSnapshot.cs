@@ -45,18 +45,15 @@ namespace ProjectIDGenerator.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RelatedSystem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sponsor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StakeHolder")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("cId");

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OpenXmlPowerTools;
 using ProjectIDGenerator.Data;
-using ProjectIDGenerator.Migrations;
 using ProjectIDGenerator.Models;
 using ProjectIDGenerator.ViewModels;
 using System.Xml;
@@ -75,10 +74,6 @@ namespace ProjectIDGenerator.Controllers
                 ProjectID = changeRequest.ProjectId,
                 ChangeRequestId = await ChReqGen(changeRequest.ProjectId),
                 Description = changeRequest.ChangeDescription,
-                RequestBy = changeRequest.RequestBy,
-                RelatedSystem = changeRequest.RelatedSystem,
-                Sponsor = changeRequest.Sponsor,
-
                 CreationDate = DateTime.Now
             };
             await _context.ChangeRequests.AddAsync(Request);
