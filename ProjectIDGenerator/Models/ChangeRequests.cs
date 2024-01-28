@@ -24,5 +24,6 @@ namespace ProjectIDGenerator.Models
         public string? StakeHolder { get; set; }
         public string? RelatedSystem { get; set; }
         public string? Sponsor { get; set; }
+        public string? RelatedProject { get; set; }
     }
 }

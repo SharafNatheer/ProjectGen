@@ -32,8 +32,20 @@
             <div class="col-10">
                 <form asp-controller="Home" asp-action="AddChangeRequest">
                     <div class="row mt-3">
-                        <div class="col-11 m-1">
+                        <div class="col-12 m-1">
                             <input class="form-control" type="text" asp-for="ChangeDescription" placeholder="Description" />
+                            <br />
+                            <input class="form-control" type="text" asp-for="Requestedby" placeholder="Requested By" />
+                                <br />
+                            <input class="form-control" type="text" asp-for="RelatedProject" placeholder="Related Project Name" />
+                                <br />
+                            <input class="form-control" type="text" asp-for="ProjectSponser" placeholder="Project Sponser" />
+                                <br />
+                            <input class="form-control" type="text" asp-for="StakeHolder" placeholder="StakeHolder" />
+                                <br />
+                            <input class="form-control" type="text" asp-for="RelatedSystem" placeholder="Related System" />
+                                <br />
+
                         </div>
                         <div class="col-1 mt-1 mr-3">
                             <button class="btn btn-primary mb-3" type="submit">Add</button>
@@ -56,6 +68,23 @@
                         <th scope="col">
                             CreationDate
                         </th>
+                        
+                        <th scope="col">
+                            Reuested By
+                            </th>
+
+                         <th scope="col">
+                                Related Project Name
+                         </th>
+                         <th scope="col">
+                                Project Sponser
+                         </th>
+                         <th scope="col">
+                                StakeHolder
+                         </th>
+                         <th scope="col">
+                                Related System
+                         </th>
                         <th scope="col">
                             Download Template
                         </th>
@@ -74,7 +103,25 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreationDate)
+
                             </td>
+                             <td>
+                              @Html.DisplayFor(modelItem => item.RequestBy)
+                             </td>
+                             <td>
+                               @Html.DisplayFor(modelItem => item.RelatedProject)
+                             </td>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.Sponsor)
+
+                             </td>
+                             <td>
+                               @Html.DisplayFor(modelItem => item.StakeHolder)
+
+                             </td>
+                             <td>
+                               @Html.DisplayFor(modelItem => item.RelatedSystem)
+                             </td>
                             <td>
                                 <a asp-controller="Home" asp-action="MSWDownload" asp-route-crid="@item.ChangeRequestId" style="border-bottom-right-radius: 0px!important;border-top-right-radius: 0px!important;" class="btn btn-outline-success btn-sm btn-edit icon-va">
                                         <span class="material-symbols-outlined">
@@ -100,7 +147,7 @@
         <div class="col-6">
             <form asp-controller="Home" asp-action="AddProject">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-6">
                         <input class="form-control" type="text" asp-for="Name" placeholder="Name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>

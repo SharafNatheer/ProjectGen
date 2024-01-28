@@ -23,5 +23,15 @@ namespace ProjectIDGenerator.ViewModels
         public ChangesViewModel? changesViewModel { get; set; }
 
         public string ChangeDescription { get; set; }
+
+        public string Requestedby { get; set; }
+
+        public string ProjectSponser { get; set; }
+
+        public string RelatedProject { get; set; }
+
+        public string StakeHolder { get; set; }
+
+        public string RelatedSystem { get; set; }
     }
 }

@@ -49,7 +49,8 @@ namespace ProjectIDGenerator.Controllers
                 Id = await IdGen(),
                 Name = request.Name,
                 Description = request.Description,
-                CreationDate = DateTime.Now
+                CreationDate = DateTime.Now,
+                
             };
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
@@ -74,7 +75,12 @@ namespace ProjectIDGenerator.Controllers
                 ProjectID = changeRequest.ProjectId,
                 ChangeRequestId = await ChReqGen(changeRequest.ProjectId),
                 Description = changeRequest.ChangeDescription,
-                CreationDate = DateTime.Now
+                CreationDate = DateTime.Now,
+                RequestBy =changeRequest.Requestedby,
+                RelatedProject = changeRequest.RelatedProject,
+                Sponsor = changeRequest.ProjectSponser,
+                StakeHolder =changeRequest.StakeHolder,
+                RelatedSystem = changeRequest.RelatedSystem
             };
             await _context.ChangeRequests.AddAsync(Request);
             await _context.SaveChangesAsync();
@@ -100,6 +106,7 @@ namespace ProjectIDGenerator.Controllers
             {
                 Id = p.Id,
                 Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+                
             }).ToList(), "Id", "Name");
             model.ChangeRequests = changes;
             model.ProjectId = projectID;
@@ -114,6 +121,17 @@ namespace ProjectIDGenerator.Controllers
             var generatedDoc = SearchAndReplace(templateDoc, new Dictionary<string, string>(){
     {"<<ProjID>>", changeRequest.ProjectID},
     {"<<CRID>>", changeRequest.ChangeRequestId},
+    {"<<Rb>>",changeRequest.RequestBy},
+    {"<<DOR>>",changeRequest.CreationDate.ToString()},
+    {"<<RPN>>",changeRequest.RelatedProject},
+    {"<<PS>>",changeRequest.Sponsor },
+    {"<<SH>>",changeRequest.StakeHolder },
+    {"<<RS>>",changeRequest.RelatedSystem }
+
+
+
+
+                
 });
             return File(generatedDoc, "application/vnd.openxmlformats-officedocument.wordprocessingml.document ", "CRIDMS.docx");
         }
