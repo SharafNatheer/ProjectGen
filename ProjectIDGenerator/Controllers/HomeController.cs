@@ -35,6 +35,11 @@ namespace ProjectIDGenerator.Controllers
         {
             ModelState.Remove("ProjectId");
             ModelState.Remove("ChangeDescription");
+            ModelState.Remove("Requestedby");
+            ModelState.Remove("ProjectSponser");
+            ModelState.Remove("RelatedProject");
+            ModelState.Remove("StakeHolder");
+            ModelState.Remove("RelatedSystem");
             if (!ModelState.IsValid)
             {
                 ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
