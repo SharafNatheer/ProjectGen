@@ -19,7 +19,7 @@ namespace ProjectIDGenerator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Home()
+        public IActionResult Home()
         {
             var model = new ProjectsViewModel();
             ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
