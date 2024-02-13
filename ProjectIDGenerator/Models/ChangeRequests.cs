@@ -20,6 +20,7 @@ namespace ProjectIDGenerator.Models
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDate { get; set; }
+        public string? CreateBy { get; set; }
         public string? RequestBy { get; set; }
         public string? StakeHolder { get; set; }
         public string? RelatedSystem { get; set; }

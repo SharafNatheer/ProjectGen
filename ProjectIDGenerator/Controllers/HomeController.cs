@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OpenXmlPowerTools;
@@ -18,6 +19,7 @@ namespace ProjectIDGenerator.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Home()
         {
