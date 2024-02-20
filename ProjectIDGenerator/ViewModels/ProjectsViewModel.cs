@@ -33,5 +33,6 @@ namespace ProjectIDGenerator.ViewModels
         public string StakeHolder { get; set; }
 
         public string RelatedSystem { get; set; }
+        public string? CreateBy { get; set; }
     }
 }

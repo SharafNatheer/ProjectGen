@@ -49,7 +49,7 @@ namespace ProjectIDGenerator.Areas.Identity
                 services.AddDistributedMemoryCache();
                 services.AddSession(options =>
                 {
-                    options.IdleTimeout = TimeSpan.FromMinutes(45);
+                    options.IdleTimeout = TimeSpan.FromMinutes(30);
                     options.Cookie.HttpOnly = true;
                     options.Cookie.IsEssential = true;
                 });
@@ -57,7 +57,7 @@ namespace ProjectIDGenerator.Areas.Identity
                 {
                     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                     options.Cookie.HttpOnly = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(45);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     options.LoginPath = "/Identity/Account/Login";
                     // ReturnUrlParameter requires 
                     //using Microsoft.AspNetCore.Authentication.Cookies;

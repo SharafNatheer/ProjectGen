@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,13 @@ namespace ProjectIDGenerator.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [Authorize]
@@ -28,10 +31,11 @@ namespace ProjectIDGenerator.Controllers
             {
                 Id = p.Id,
                 Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
-            }).ToList(), "Id", "Name");
+            }).OrderBy(p => p.Name).ToList(), "Id", "Name");
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddProject(ProjectsViewModel request)
         {
@@ -47,17 +51,18 @@ namespace ProjectIDGenerator.Controllers
                 ViewBag.Projects = new SelectList(_context.Projects.Select(p => new
                 {
                     Id = p.Id,
-                    Name = p.Description != null ? p.Name + " (" + p.Description + ")" : p.Name
+                    Name = p.Description != null ? p.Name + "(" + p.Description + ")" : p.Name
                 }).ToList(), "Id", "Name");
                 return View("Home", request);
             }
+            var currentUser = await _userManager.GetUserAsync(User);
             var project = new Project
             {
                 Id = await IdGen(),
                 Name = request.Name,
                 Description = request.Description,
                 CreationDate = DateTime.Now,
-                
+                CreateBy = currentUser.Id,
             };
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
@@ -73,10 +78,12 @@ namespace ProjectIDGenerator.Controllers
             return View("Home", model);
         }
 
+        [Authorize]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddChangeRequest(ChangesViewModel changeRequest)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
             var Request = new ChangeRequests
             {
                 ProjectID = changeRequest.ProjectId,
@@ -87,7 +94,8 @@ namespace ProjectIDGenerator.Controllers
                 RelatedProject = changeRequest.RelatedProject,
                 Sponsor = changeRequest.ProjectSponser,
                 StakeHolder =changeRequest.StakeHolder,
-                RelatedSystem = changeRequest.RelatedSystem
+                RelatedSystem = changeRequest.RelatedSystem,
+                CreateBy = currentUser.Id,
             };
             await _context.ChangeRequests.AddAsync(Request);
             await _context.SaveChangesAsync();
@@ -104,7 +112,7 @@ namespace ProjectIDGenerator.Controllers
             return View("Home", model);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> GetChanges(string projectID)
         {
             var changes = await _context.ChangeRequests.Where(c => c.ProjectID == projectID).OrderByDescending(o => o.ChangeRequestId).ToListAsync();
@@ -120,6 +128,7 @@ namespace ProjectIDGenerator.Controllers
             return View("Home", model);
         }
 
+        [Authorize]
         public async Task<IActionResult> MSWDownload(string crid)
         {
             var changeRequest = await _context.ChangeRequests.Where(c => c.ChangeRequestId == crid).FirstOrDefaultAsync();
@@ -134,10 +143,6 @@ namespace ProjectIDGenerator.Controllers
     {"<<PS>>",changeRequest.Sponsor },
     {"<<SH>>",changeRequest.StakeHolder },
     {"<<RS>>",changeRequest.RelatedSystem }
-
-
-
-
                 
 });
             return File(generatedDoc, "application/vnd.openxmlformats-officedocument.wordprocessingml.document ", "CRIDMS.docx");
