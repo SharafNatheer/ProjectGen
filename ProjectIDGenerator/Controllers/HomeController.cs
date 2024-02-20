@@ -148,6 +148,13 @@ namespace ProjectIDGenerator.Controllers
             return File(generatedDoc, "application/vnd.openxmlformats-officedocument.wordprocessingml.document ", "CRIDMS.docx");
         }
 
+        [Authorize]
+        public IActionResult PromoGen()
+        {
+            return View();
+        }
+
+
         public async Task<string> IdGen()
         {
             string result = string.Empty;
