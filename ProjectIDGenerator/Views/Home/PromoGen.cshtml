@@ -1,3 +1,167 @@
-﻿<span>
-    Hello Promo
-</span>
+﻿@model ProjectIDGenerator.ViewModels.PromoCodeViewModel
+
+
+@{
+
+}
+<style>
+    .header-hero-content {
+        padding-top: 0px;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="header-hero-content padding-top--0">
+
+                <div class="box-root  padding-bottom--24 flex-flex flex-justifyContent--center">
+                    <h1 style="color:black;><a href=" index.html" rel="dofollow">
+                        PromoCode Generator</a>
+                    </h1>
+                </div>
+                <button id="myBtn" class="myBtn" style="float: left;
+                        margin-left: 290px;">
+                    Create a New PromoCode
+                </button>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" style="float: left;
+                              margin-left: 1300px;">&times;</span>
+                        <div class="formbg-outer">
+                            <div class="formbg">
+                                <div class="formbg-inner padding-horizontal--48">
+                                    <span class="padding-bottom--15">Create a PromoCode Here!</span>
+                                    <form method="post" asp-controller="Home" asp-action="AddPromoCode">
+                                        <div class="field padding-bottom--24">
+                                            <label for="firstname">First Name</label>
+                                            <input type="text" asp-for="FirstName">
+                                        </div>
+                                        <div class="field padding-bottom--24">
+
+
+                                            <label for="Secondname">Second Name</label>
+                                            <input type="text" asp-for="SecondName">
+
+
+
+                                        </div>
+                                        <div class="field padding-bottom--24">
+                                            <label for="Lastname">Last Name</label>
+                                            <input type="text" asp-for="LastName">
+                                        </div>
+
+                                        <div class="field padding-bottom--24">
+                                            <label for="Accountnumber">Mobile Number</label>
+                                            <input type="number" asp-for="MobileNO">
+                                        </div>
+
+
+                                        <div class="field padding-bottom--24">
+                                            <input type="submit" name="submit" value="Get a PromoCode">
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="footer-link padding-top--24">
+                                <span>
+                                    Powerd By <a href="https://qi.iq/ar/home"
+                                                 style="color:rgb(236, 208, 79);">QI</a>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- header hero content -->
+        </div>
+    </div>
+
+</div>
+<!-- container -->
+
+
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="section-title text-center pb-40">
+            <div class="line m-auto"></div>
+            <h3 class="title">
+                PromoCodes here!
+
+            </h3>
+
+        </div>
+        <div class="input_">
+            <table class="table">
+                <thead>
+                <th>Full Name</th>
+                <th>Mobile Number</th>
+                <th>PromoCode</th>
+                <th>Date of Creation</th>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var PromoCodeViewModel in Model.PCs)
+                    {
+                        <tr>
+                            <td>
+                                @PromoCodeViewModel.FirstName @PromoCodeViewModel.SecondName
+                                @PromoCodeViewModel.LastName
+                            </td>
+                            <td>@PromoCodeViewModel.MobileNO</td>
+                            <td>@PromoCodeViewModel.MyPromoCode</td>
+                            <td>@PromoCodeViewModel.CreationDate.ToString()</td>
+                        </tr>
+                    }
+
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+ 
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+   
+</script>

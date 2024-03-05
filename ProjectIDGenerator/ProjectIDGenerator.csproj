@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\banner-bg.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Templates\CRIDMS.docx" />
   </ItemGroup>
 
@@ -34,6 +38,33 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\banner-bg.svg" />
+    <None Include="wwwroot\fonts\LineIcons.svg" />
+    <None Include="wwwroot\fonts\LineIcons.woff2" />
+    <None Include="wwwroot\images\about\about-shape-1.svg" />
+    <None Include="wwwroot\images\about\about-shape-2.svg" />
+    <None Include="wwwroot\images\about\about1.svg" />
+    <None Include="wwwroot\images\about\about2.svg" />
+    <None Include="wwwroot\images\about\about3.svg" />
+    <None Include="wwwroot\images\brands\ayroui.svg" />
+    <None Include="wwwroot\images\brands\ecommerce-html.svg" />
+    <None Include="wwwroot\images\brands\graygrids.svg" />
+    <None Include="wwwroot\images\brands\lineicons.svg" />
+    <None Include="wwwroot\images\brands\uideck.svg" />
+    <None Include="wwwroot\images\footer\footer-bg.svg" />
+    <None Include="wwwroot\images\header\banner-bg.svg" />
+    <None Include="wwwroot\images\logo\logo-2.svg" />
+    <None Include="wwwroot\images\logo\logo.svg" />
+    <None Include="wwwroot\images\logo\logoo.svg" />
+    <None Include="wwwroot\images\services\services-shape-1.svg" />
+    <None Include="wwwroot\images\services\services-shape-2.svg" />
+    <None Include="wwwroot\images\services\services-shape-3.svg" />
+    <None Include="wwwroot\images\services\services-shape.svg" />
+    <None Include="wwwroot\images\testimonials\textimonial-shape.svg" />
+    <None Include="wwwroot\images\video\dots.svg" />
   </ItemGroup>
 
 </Project>

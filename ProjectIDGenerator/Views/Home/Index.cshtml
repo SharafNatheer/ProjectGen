@@ -1,0 +1,177 @@
+﻿
+@model ProjectIDGenerator.ViewModels.PromoCodeViewModel
+
+
+@{
+
+}
+
+
+
+<meta charset="utf-8">
+<title>PromoCode Generator</title>
+<link rel="stylesheet" href="~/css/promocode.css" />
+
+<div class="login-root">
+    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+        <div class="loginbackground box-background--white padding-top--64">
+            <div class="loginbackground-gridContainer">
+                <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+                    <div class="box-root"
+                         style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+                    </div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+                    <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;">
+                    </div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+                    <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+                    <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+                    <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;">
+                    </div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+                    <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;">
+                    </div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+                    <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+                    <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;">
+                    </div>
+                </div>
+                <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+                    <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+            <a href="index.html">
+                <h2 width="10" height="100" style="color:rgb(236, 208, 79);float: left;
+                    margin-left: 155px;">
+                    Jenna
+                </h2>
+            </a>
+            <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+                <h1><a href="index.html" rel="dofollow">PromoCode Generator</a></h1>
+            </div>
+            <button id="myBtn" class="myBtn" style="float: left;
+                    margin-left: 450px;">
+                Create a New PromoCode
+            </button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" style="float: left;
+                          margin-left: 1300px;">&times;</span>
+                    <div class="formbg-outer">
+                        <div class="formbg">
+                            <div class="formbg-inner padding-horizontal--48">
+                                <span class="padding-bottom--15">Create a PromoCode Here!</span>
+                                <form method="post" asp-controller="Home" asp-action="AddPromoCode">
+                                    <div class="field padding-bottom--24">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" asp-for="FirstName">
+                                    </div>
+                                    <div class="field padding-bottom--24">
+                                        <div class="grid--50-50">
+                                            <label for="Secondname">Second Name</label>
+
+                                        </div>
+                                        <input type="text" asp-for="SecondName">
+                                    </div>
+                                    <div class="field padding-bottom--24">
+                                        <label for="Lastname">Last Name</label>
+                                        <input type="text" asp-for="LastName">
+                                    </div>
+
+                                    <div class="field padding-bottom--24">
+                                        <label for="Accountnumber">Mobile Number</label>
+                                        <input type="number" asp-for="MobileNO">
+                                    </div>
+
+
+                                    <div class="field padding-bottom--24">
+                                        <input type="submit" name="submit" value="Get a PromoCode">
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="footer-link padding-top--24">
+                            <span>Powerd By <a href="https://qi.iq/ar/home" style="color:rgb(236, 208, 79);">QI</a></span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+
+            <table class="table">
+                <thead>
+                <th>Full Name</th>
+                <th>Mobile Number</th>
+                <th>PromoCode</th>
+                <th>Date of Creation</th>
+
+                </thead>
+
+                <tbody>
+                    
+                    @foreach (var PromoCodeViewModel in Model.PCs)
+                    {
+                        <tr>
+                            <td>@PromoCodeViewModel.FirstName @PromoCodeViewModel.SecondName @PromoCodeViewModel.LastName </td>
+                            <td>@PromoCodeViewModel.MobileNO</td>
+                            <td>@PromoCodeViewModel.MyPromoCode</td>
+                            <td>@PromoCodeViewModel.CreationDate.ToString()</td>
+                        </tr>
+                    }
+
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+
+    </div>
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

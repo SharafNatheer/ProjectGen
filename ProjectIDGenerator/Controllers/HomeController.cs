@@ -149,9 +149,14 @@ namespace ProjectIDGenerator.Controllers
         }
 
         [Authorize]
-        public IActionResult PromoGen()
+        public async Task<IActionResult> PromoGen()
         {
-            return View();
+            var code = await _context.PromoCodes.OrderByDescending(p => p.CreationDate).ToListAsync();
+            var vm = new PromoCodeViewModel
+            {
+                PCs = code,
+            };
+            return View(vm);
         }
 
 
@@ -190,5 +195,80 @@ namespace ProjectIDGenerator.Controllers
 
             return doc.DocumentByteArray;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var code = await _context.PromoCodes.OrderByDescending(p => p.CreationDate).ToListAsync();
+            var vm = new PromoCodeViewModel
+            {
+                PCs = code,
+            };
+            return View(vm);
+        }
+
+
+
+        public string GeneratePromoCode()
+        {
+            var random = new Random();
+            var promoCode = string.Empty;
+
+            // Generate random letter
+            char letter = (char)random.Next('A', 'Z' + 1);
+            promoCode += letter;
+
+            // Generate random numbers
+            for (int i = 0; i < 3; i++)
+            {
+                int number = random.Next(0, 10);
+                promoCode += number;
+            }
+
+            return promoCode;
+        }
+
+
+        public string GetUniquePromoCode()
+        {
+            var promoCode = GeneratePromoCode();
+            var existingPromoCode = _context.PromoCodes.FirstOrDefault(p => p.MyPromoCode == promoCode);
+            if (existingPromoCode != null)
+            {
+                // If the promo code exists, generate another one recursively
+                return GetUniquePromoCode();
+            }
+
+            return promoCode;
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddPromoCode(PromoCodeViewModel request)
+        {
+            
+
+
+            var promo1 = new PromoCode
+            {
+                FirstName = request.FirstName,
+                SecondName = request.SecondName,
+                LastName = request.LastName,
+                MobileNO = request.MobileNO,
+                CreationDate = DateTime.Now,
+
+
+                MyPromoCode = GetUniquePromoCode(),
+
+
+            };
+            await _context.PromoCodes.AddAsync(promo1);
+            await _context.SaveChangesAsync();
+            var model = new PromoCodeViewModel();
+
+
+            return View("PromoGen", model);
+        }
     }
 }
+

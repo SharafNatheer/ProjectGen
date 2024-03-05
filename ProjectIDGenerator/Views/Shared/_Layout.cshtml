@@ -13,13 +13,84 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="~/css/promocode.css" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="~/images/logo/logoo.svg" type="image/png" />
+
+
+    <!--====== CSS Files LinkUp ======-->
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/glightbox.min.css" />
+    <link rel="stylesheet" href="~/css/lineIcons.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/promo.css" />
+
 </head>
 <body>
+    <!--====== HEADER PART START ======-->
+    <header class="header-area" style="height: 600px;">
+        <div class="navbar-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <h2 width="50" height="100" style="color:rgb(236, 208, 79);" />Jenna</h2>
+                            </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"> </span>
+                                <span class="toggler-icon"> </span>
+                                <span class="toggler-icon"> </span>
+                            </button>
+
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="~../../../Views/Home/Home.cshtml">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <!-- <a class="page-scroll" href="#features">Add a PromoCode</a>-->
+                                        <a href="promo.html">Add a PromoCode</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#about">Logout</a>
+                                    </li>
+                        </nav>
+                        <!-- navbar -->
+                    </div>
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- navbar area -->
+
+        <div id="home" class="header-hero bg_cover" style="background-image: url('@Url.Content("~/images/header/banner-bg.svg")');">
+            
+            <div id="particles-1" class="particles"></div>
+        </div>
+        <!-- header hero -->
+    </header>
+    <!--====== HEADER PART ENDS ======-->
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+    <!--====== Javascript Files ======-->
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/glightbox.min.js"></script>
+    <script src="~/js/count-up.min.js"></script>
+    <script src="~/js/particles.min.js"></script>
+    <script src="~/js/main.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
