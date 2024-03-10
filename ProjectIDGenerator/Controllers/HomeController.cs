@@ -254,7 +254,7 @@ namespace ProjectIDGenerator.Controllers
                 FirstName = request.FirstName,
                 SecondName = request.SecondName,
                 LastName = request.LastName,
-                MobileNO = request.MobileNO,
+                MobileNO = request.MobileNO.ToString(),
                 CreationDate = DateTime.Now,
 
 
@@ -264,7 +264,8 @@ namespace ProjectIDGenerator.Controllers
             };
             await _context.PromoCodes.AddAsync(promo1);
             await _context.SaveChangesAsync();
-            var model = new PromoCodeViewModel();
+            var pcs = await _context.PromoCodes.OrderByDescending(p => p.CreationDate).ToListAsync();
+            var model = new PromoCodeViewModel { PCs = pcs };
 
 
             return View("PromoGen", model);

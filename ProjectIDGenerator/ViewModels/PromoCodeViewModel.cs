@@ -19,10 +19,9 @@ namespace ProjectIDGenerator.ViewModels
         public string LastName { get; set; }
         [Required(ErrorMessage = "This field can not be empty.")]
 
-        public int MobileNO { get; set; }
+        public Int64 MobileNO { get; set; }
         [Required(ErrorMessage = "This field can not be empty.")]
         public string MyPromoCode { get; set; }
 
-        public string test { get; set; }
     }
 }

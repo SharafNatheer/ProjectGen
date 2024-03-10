@@ -49,6 +49,12 @@ a {
     z-index: 0;
     overflow: hidden;
 }
+.text {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+
+}
 
 .flex-flex {
     display: flex;

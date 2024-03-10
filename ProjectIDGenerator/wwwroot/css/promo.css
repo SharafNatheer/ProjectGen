@@ -292,10 +292,18 @@ a.ssolink {
     border-radius: 25px;
 }
 
+.modal-backdrop {
+    z-index: 100000 !important;
+}
+
+.modal {
+    z-index: 100001 !important;
+}
+
+Hope it he
 /* The Close Button */
 .close {
     color: rgb(84, 105, 212);
-    
     font-size: 28px;
     font-weight: bold;
 }

@@ -393,37 +393,6 @@ input[type=submit]:hover {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .navbar-btn .main-btn {
   line-height: 45px;
   background: -webkit-gradient(linear, left top, right top, from(#fe8464), color-stop(50%, #fe6e9a), to(#fe8464));
@@ -549,7 +518,7 @@ input[type=submit]:hover {
 .footer-area {
   background-position: top center;
   position: relative;
-  z-index: 5;
+  z-index: -1;
 }
 
 .footer-area::before {
@@ -585,7 +554,8 @@ input[type=submit]:hover {
 }
 
 .footer-about .logo img {
-  width: 160px;
+    width: 160px;
+    PADDING-TOP: 11px;
 }
 
 .footer-about .text {

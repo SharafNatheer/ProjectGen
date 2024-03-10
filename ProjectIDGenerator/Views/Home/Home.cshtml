@@ -4,22 +4,8 @@
 }
 @*ALERT !! there is two ViewModels one for adding projects and one for changes their attributes are all in in on vm (projectvm) and their respective vms are in controller to avoid checking model states that doesn't belong to them *@
 <div class="container-fluid vh-100">
-    <div class="row" dir="ltr">
-        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login")">
-            <button type="submit" class="btn btn-outline-success icon-va" style="height:40px">
-                <span class="material-symbols-outlined">
-                    logout
-                </span>خروج
-            </button>
-        </form>
-    </div>
-    <div class="row">
-        <form asp-controller="Home" asp-action="PromoGen" style="display:flex; justify-content:end;">
-            <button type="submit" class="btn btn-outline-success icon-va" style="height:40px">
-                PromoGen
-            </button>
-        </form>
-    </div>
+    
+    
     <div class="row text-center p-2 border-bottom">
         <h1>Project ID Generator</h1>
     </div>

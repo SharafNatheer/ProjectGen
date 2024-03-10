@@ -13,7 +13,8 @@ namespace ProjectIDGenerator.Models
         public string SecondName { get; set; }
 
         public string LastName { get; set; }
-        public Int64 MobileNO { get; set; }
+        public string ? MobileNO { get; set; }
+        [Required]
 
         public string MyPromoCode { get; set; }
     }
