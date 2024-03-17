@@ -1,14 +1,9 @@
 ﻿@model ProjectIDGenerator.ViewModels.ProjectsViewModel
 @{
-
+    ViewBag.Title = "Project ID Generator";
 }
 @*ALERT !! there is two ViewModels one for adding projects and one for changes their attributes are all in in on vm (projectvm) and their respective vms are in controller to avoid checking model states that doesn't belong to them *@
-<div class="container-fluid vh-100">
-    
-    
-    <div class="row text-center p-2 border-bottom">
-        <h1>Project ID Generator</h1>
-    </div>
+<div class="container-fluid">
     <div class="row pt-4 justify-content-center ">
         <div class="col-6">
             <select class="form-select" id="single" asp-for="ProjectId" asp-items="ViewBag.Projects" style="width:100%;">

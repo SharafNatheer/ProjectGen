@@ -446,12 +446,6 @@ input[type=submit]:hover {
   }
 }
 
-.header-hero-content .header-sub-title {
-  font-size: 38px;
-  font-weight: 300;
-  color: #fff;
-}
-
 @media (max-width: 767px) {
   .header-hero-content .header-sub-title {
     font-size: 24px;
