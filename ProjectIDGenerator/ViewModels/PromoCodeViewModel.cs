@@ -1,4 +1,5 @@
-﻿using ProjectIDGenerator.Models;
+﻿using ProjectIDGenerator.CustomValidators;
+using ProjectIDGenerator.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectIDGenerator.ViewModels
@@ -18,8 +19,8 @@ namespace ProjectIDGenerator.ViewModels
 
         public string LastName { get; set; }
         [Required(ErrorMessage = "This field can not be empty.")]
-
-        public Int64 MobileNO { get; set; }
+        [UniqueMobileNumber]
+        public string MobileNO { get; set; }
         [Required(ErrorMessage = "This field can not be empty.")]
         public string MyPromoCode { get; set; }
 

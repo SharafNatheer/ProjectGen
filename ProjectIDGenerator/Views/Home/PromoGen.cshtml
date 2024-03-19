@@ -47,6 +47,7 @@
                                         <div class="field padding-bottom--24">
                                             <label for="Mobilenumber">Mobile Number</label>
                                             <input type="text" asp-for="MobileNO">
+                                            <span asp-validation-for="MobileNO" class="text-danger"></span>
                                         </div>
 
 
@@ -99,7 +100,7 @@
                 <th>Date of Creation</th>
 
                 </thead>
-
+               
                 <tbody>
 
                     @foreach (var PromoCodeViewModel in Model.PCs)

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OpenXmlPowerTools;
 using ProjectIDGenerator.Data;
+using ProjectIDGenerator.Migrations;
 using ProjectIDGenerator.Models;
 using ProjectIDGenerator.ViewModels;
 using System.Xml;
@@ -241,20 +243,28 @@ namespace ProjectIDGenerator.Controllers
 
             return promoCode;
         }
-
+        public bool MobileNO(string request)
+        {
+            
+            var existingmobile = _context.PromoCodes.Any(p => p.MobileNO == request.ToString());
+            return existingmobile;
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddPromoCode(PromoCodeViewModel request)
         {
+            if(!ModelState.IsValid)
+            {
+                return View("PromoGen",request);
+            }
             
-
 
             var promo1 = new PromoCode
             {
                 FirstName = request.FirstName,
                 SecondName = request.SecondName,
                 LastName = request.LastName,
-                MobileNO = request.MobileNO.ToString(),
+                MobileNO = request.MobileNO,
                 CreationDate = DateTime.Now,
 
 

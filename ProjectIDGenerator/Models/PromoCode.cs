@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjectIDGenerator.CustomValidators;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectIDGenerator.Models
 {
@@ -13,6 +14,8 @@ namespace ProjectIDGenerator.Models
         public string SecondName { get; set; }
 
         public string LastName { get; set; }
+
+        [UniqueMobileNumber]
         public string ? MobileNO { get; set; }
         [Required]
 
