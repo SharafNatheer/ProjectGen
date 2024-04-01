@@ -9,6 +9,7 @@ using ProjectIDGenerator.Data;
 using ProjectIDGenerator.Migrations;
 using ProjectIDGenerator.Models;
 using ProjectIDGenerator.ViewModels;
+using System.Linq;
 using System.Xml;
 
 namespace ProjectIDGenerator.Controllers
@@ -199,13 +200,10 @@ namespace ProjectIDGenerator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> mobile()
         {
-            var code = await _context.PromoCodes.OrderByDescending(p => p.CreationDate).ToListAsync();
-            var vm = new PromoCodeViewModel
-            {
-                PCs = code,
-            };
+            var vm = new PromoCodeViewModel();
+           
             return View(vm);
         }
 
@@ -243,20 +241,25 @@ namespace ProjectIDGenerator.Controllers
 
             return promoCode;
         }
-        public bool MobileNO(string request)
+        public string Uniquemobile(string no)
         {
-            
-            var existingmobile = _context.PromoCodes.Any(p => p.MobileNO == request.ToString());
-            return existingmobile;
+
+            var existingmobile = _context.PromoCodes.Any(p => p.MobileNO == no);
+            if (existingmobile == true)
+            {
+                // If the mobile exists, generate another one recursively
+                existingmobile = true;
+                //[Required(ViewBag.ErrorMessage = "The mobile number is already in use. Please choose a different one.")] ;
+                return existingmobile.ToString();
+            }
+
+            return no;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddPromoCode(PromoCodeViewModel request)
         {
-            if(!ModelState.IsValid)
-            {
-                return View("PromoGen",request);
-            }
+           
             
 
             var promo1 = new PromoCode
@@ -264,7 +267,7 @@ namespace ProjectIDGenerator.Controllers
                 FirstName = request.FirstName,
                 SecondName = request.SecondName,
                 LastName = request.LastName,
-                MobileNO = request.MobileNO,
+                MobileNO = Uniquemobile(request.MobileNO),
                 CreationDate = DateTime.Now,
 
 
@@ -272,7 +275,14 @@ namespace ProjectIDGenerator.Controllers
 
 
             };
-            await _context.PromoCodes.AddAsync(promo1);
+            string a = "True";
+           if (promo1.MobileNO == a)
+            {
+               
+                return RedirectToAction("mobile");
+            }
+            else
+                await _context.PromoCodes.AddAsync(promo1);
             await _context.SaveChangesAsync();
             var pcs = await _context.PromoCodes.OrderByDescending(p => p.CreationDate).ToListAsync();
             var model = new PromoCodeViewModel { PCs = pcs };

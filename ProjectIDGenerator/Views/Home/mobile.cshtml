@@ -13,18 +13,10 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="header-hero-content padding-top--0">
-                <button id="myBtn" class="myBtn" style="float: left;
-                        margin-left: 290px;">
-                    Create a New PromoCode
-                </button>
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" style="float: left;
-                              margin-left: 1300px;">&times;</span>
-                        <div class="formbg-outer">
+                
                             <div class="formbg">
                                 <div class="formbg-inner padding-horizontal--48">
-                                    <span class="padding-bottom--15">Create a PromoCode Here!</span>
+                            
                                     <form method="post" asp-controller="Home" asp-action="AddPromoCode">
                                         <div class="field padding-bottom--24">
                                             <label for="firstname">First Name</label>
@@ -52,10 +44,9 @@
                                             <input type="text" asp-for="MobileNO">
                                             <span asp-validation-for="MobileNO" class="text-danger"></span>
                                         </div>
-                                        @if (ViewBag.ErrorMessage != null)
-                                        {
-                                            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
-                                        }
+                                       
+                                        <div class="alert alert-danger">The mobile number is already in use. Please choose a different one.</div>
+                                        
 
                                         <div class="field padding-bottom--24">
                                             <input type="submit" name="submit" value="Get a PromoCode">
@@ -71,11 +62,7 @@
                                 </span>
 
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                   
 
             </div>
             <!-- header hero content -->
@@ -87,60 +74,6 @@
 
 
 
-<div class="row justify-content-center">
-    <div class="col-lg-10">
-        <div class="section-title text-center pb-40">
-            <div class="line m-auto"></div>
-            <h3 class="title">
-                PromoCodes here!
-
-            </h3>
-
-        </div>
-        <div class="input_">
-            <table class="table">
-                <thead>
-                <th>Full Name</th>
-                <th>Mobile Number</th>
-                <th>PromoCode</th>
-                <th>Date of Creation</th>
-
-                </thead>
-               
-                <tbody>
-                    @if (Model.PCs != null)
-                    {
-                        @foreach (var PromoCodeViewModel in Model.PCs)
-                        {
-                            <tr>
-                                <td>
-                                    @PromoCodeViewModel.FirstName @PromoCodeViewModel.SecondName
-                                    @PromoCodeViewModel.LastName
-                                </td>
-                                <td>@PromoCodeViewModel.MobileNO</td>
-                                <td>@PromoCodeViewModel.MyPromoCode</td>
-                                <td>@PromoCodeViewModel.CreationDate.ToString()</td>
-                            </tr>
-                        }
-                    }
-
-                    
-
-
-
-
-                </tbody>
-
-            </table>
-
-
-
-
-
-        </div>
-    </div>
-</div>
- 
 
 <script>
     // Get the modal
@@ -168,5 +101,5 @@
             modal.style.display = "none";
         }
     }
-   
+
 </script>

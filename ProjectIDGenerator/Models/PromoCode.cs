@@ -1,4 +1,4 @@
-﻿using ProjectIDGenerator.CustomValidators;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjectIDGenerator.Models
@@ -10,12 +10,14 @@ namespace ProjectIDGenerator.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDate { get; set; }
         public string FirstName { get; set; }
-
+        [Required]
         public string SecondName { get; set; }
+        [Required]
 
         public string LastName { get; set; }
+        [Required]
 
-        [UniqueMobileNumber]
+  
         public string ? MobileNO { get; set; }
         [Required]
 

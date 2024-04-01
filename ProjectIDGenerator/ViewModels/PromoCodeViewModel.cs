@@ -1,4 +1,4 @@
-﻿using ProjectIDGenerator.CustomValidators;
+﻿
 using ProjectIDGenerator.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,17 +11,22 @@ namespace ProjectIDGenerator.ViewModels
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDate { get; set; }
+       
+        [Required(ErrorMessage = "Please enter your name.")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "This field can not be empty.")]
+       
 
+        [Required(ErrorMessage = "Please enter your second name.")]
         public string SecondName { get; set; }
-        [Required(ErrorMessage = "This field can not be empty.")]
 
+        [Required(ErrorMessage = "Please enter your last name.")]
+       
         public string LastName { get; set; }
-        [Required(ErrorMessage = "This field can not be empty.")]
-        [UniqueMobileNumber]
+        
+        [Required(ErrorMessage = "Please enter mobile number")]
+       
         public string MobileNO { get; set; }
-        [Required(ErrorMessage = "This field can not be empty.")]
+        
         public string MyPromoCode { get; set; }
 
     }
